@@ -1,0 +1,122 @@
+<div class="new-hires-container">
+  <div class="header">
+    <h2>New Hires</h2>
+    <button class="add-new-hire" (click)="openModal(null, true)">
+      + Add new hire
+    </button>
+  </div>
+  <table class="new-hires-table">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Employee ID</th>
+        <th>Name</th>
+        <th>Date of Joining</th>
+        <th>Tasks assigned</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let employee of employees">
+        <tr>
+          <td>
+            <button
+              class="expand-button"
+              (click)="employee.expanded = !employee.expanded"
+            >
+              <i
+                class="fas"
+                [ngClass]="{
+                  'fa-chevron-down': employee.expanded,
+                  'fa-chevron-right': !employee.expanded
+                }"
+              ></i>
+            </button>
+          </td>
+          <td>{{ employee.id }}</td>
+          <td>{{ employee.name }}</td>
+          <td>{{ employee.dateOfJoining }}</td>
+          <td>{{ employee.tasksAssigned }}</td>
+          <td>
+            <div class="status-bar">
+              <div
+                class="status-progress"
+                [style.width]="
+                  (employee.status.completed / employee.status.total) * 100 +
+                  '%'
+                "
+              ></div>
+              <span
+                >{{ employee.status.completed }}/{{
+                  employee.status.total
+                }}</span
+              >
+            </div>
+          </td>
+          <td>
+            <button
+              class="action-button"
+              (click)="isEditDetailsClicked = true; openModal(employee)"
+            >
+              Edit details
+            </button>
+            <button class="action-button">Invite link</button>
+          </td>
+        </tr>
+        <tr *ngIf="employee.expanded">
+          <td colspan="7">
+            <div class="expanded-content">
+              <div *ngFor="let task of employee.tasks" class="task-item">
+                <div class="task-header">
+                  <div>
+                    <div>{{ task.name }}</div>
+                    <div class="task-type">
+                      {{ task.type }}
+                      <span *ngIf="task.details"> | {{ task.details }}</span>
+                    </div>
+                  </div>
+                  <div>
+                    <div
+                      style="display: inline"
+                      [ngClass]="{
+                        'status-completed': task.status === 'completed',
+                        'status-pending': task.status === 'pending'
+                      }"
+                    >
+                      <i
+                        class="fas fa-check-circle"
+                        *ngIf="task.status === 'completed'"
+                      ></i>
+                      <i
+                        class="fas fa-clock"
+                        *ngIf="task.status === 'pending'"
+                      ></i>
+                    </div>
+                    <i
+                      (click)="openModal(null)"
+                      style="padding-left: 5px"
+                      class="fas fa-external-link-alt"
+                    ></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
+  <app-modal [isOpen]="isModalOpen" (closeModal)="closeModal()">
+    <ng-container *ngIf="isEditDetailsClicked; else viewTask">
+      <app-edit-details
+        *ngIf="selectedEmployee"
+        [employee]="selectedEmployee"
+        [isNewHire]="isNewHire"
+      ></app-edit-details>
+    </ng-container>
+    <ng-template #viewTask>
+      <app-view-task></app-view-task>
+    </ng-template>
+  </app-modal>
+</div>

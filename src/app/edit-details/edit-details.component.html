@@ -1,0 +1,108 @@
+<div class="new-hire-form">
+  <h2>{{ isNewHire ? 'Add new hire' : 'Edit new hire details' }}</h2>
+  <form [formGroup]="hireForm" (ngSubmit)="onSubmit()">
+    <div class="form-row">
+      <div class="form-group">
+        <label for="name">Name*</label>
+        <input id="name" type="text" formControlName="name"/>
+        <div *ngIf="name?.invalid && (name?.dirty || name?.touched)"
+             class="error-msg">
+          <span style="font-size: small" *ngIf="name?.hasError('required')">
+            Name is required.
+          </span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="email">Email*</label>
+        <input id="email" type="email" formControlName="email"/>
+        <div *ngIf="email?.invalid && (email?.dirty || email?.touched)"
+             class="error-msg">
+          <span style="font-size: small" *ngIf="email?.hasError('required')">
+            Email is required.
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="contact">Contact no.*</label>
+        <div class="input-group">
+          <select>
+            <option value="+91">🇮🇳 +91</option>
+            <!-- Add more country codes as needed -->
+          </select>
+          <input id="contact" type="tel" formControlName="contactNo"/>
+          <div *ngIf="contactNo?.invalid && (contactNo?.dirty || contactNo?.touched)"
+               class="error-msg">
+            <span style="font-size: small" *ngIf="contactNo?.hasError('required')">
+              Contact number is required.
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="joiningDate">Date of joining*</label>
+        <input id="joiningDate" type="date" formControlName="dateOfJoining"/>
+        <div *ngIf="dateOfJoining?.invalid && (dateOfJoining?.dirty || dateOfJoining?.touched)"
+             class="error-msg">
+          <span style="font-size: small" *ngIf="dateOfJoining?.hasError('required')">
+            Date of joining is required.
+          </span>
+        </div>
+      </div>
+    </div>
+    <label>Tasks</label>
+    <div formArrayName="tasks">
+      <div *ngFor="let task of taskForms.controls; let i = index">
+        <div [formGroupName]="i">
+          <div class="form-row">
+            <div class="form-group">
+              <label [for]="'taskTitle' + i">Title*</label>
+              <input
+                [id]="'taskTitle' + i"
+                type="text"
+                formControlName="title"
+              />
+              <div
+                *ngIf="getTaskControl(i, 'title')?.invalid && (getTaskControl(i, 'title')?.dirty || getTaskControl(i, 'title')?.touched)"
+                class="error-msg">
+                <span style="font-size: small" *ngIf="getTaskControl(i, 'title')?.hasError('required')">
+                  Title is required.
+                </span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label [for]="'type' + i"> Type* </label>
+              <input [id]="'type' + i" type="file" formControlName="type"/>
+              <div
+                *ngIf="getTaskControl(i, 'type')?.invalid && (getTaskControl(i, 'type')?.dirty || getTaskControl(i, 'type')?.touched)"
+                class="error-msg">
+                <span style="font-size: small" *ngIf="getTaskControl(i, 'type')?.hasError('required')">
+                  Type is required.
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div>
+              <label [for]="'taskDescription' + i">Task Description*</label>
+              <textarea
+                [id]="'taskDescription' + i"
+                formControlName="description"
+              ></textarea>
+              <div
+                *ngIf="getTaskControl(i, 'description')?.invalid && (getTaskControl(i, 'description')?.dirty || getTaskControl(i, 'description')?.touched)"
+                class="error-msg">
+                <span style="font-size: small" *ngIf="getTaskControl(i, 'description')?.hasError('required')">
+                  Description is required.
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button type="button" class="add-task-btn">+ Add task</button>
+    <button type="submit" class="save-btn">Save</button>
+  </form>
+</div>

@@ -1,0 +1,95 @@
+.new-hires-container {
+  font-family: Arial, sans-serif;
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.add-new-hire {
+  background-color: #ffc107;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.new-hires-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.new-hires-table th,
+.new-hires-table td {
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: left;
+}
+.new-hires-table th {
+  background-color: #f2f2f2;
+}
+.status-bar {
+  background-color: #e0e0e0;
+  height: 20px;
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+}
+.status-progress {
+  background-color: #4caf50;
+  height: 100%;
+}
+.status-bar span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #000;
+}
+.action-button {
+  margin-right: 5px;
+  padding: 5px 10px;
+  border: 1px solid #ddd;
+  background-color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.expand-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+.expanded-content {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 10px;
+  padding: 15px;
+  background-color: #f9f9f9;
+}
+.task-item {
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  overflow: hidden;
+}
+.task-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: #f0f0f0;
+}
+.task-type {
+  font-size: 0.8em;
+  color: #666;
+}
+.status-completed {
+  color: #4caf50;
+}
+.status-pending {
+  color: #f44336;
+}
+.task-details {
+  padding: 10px;
+  background-color: #fff;
+}
