@@ -9,6 +9,6 @@ import { HrPersonnelComponent } from './hr-personnel/hr-personnel.component';
   styleUrl: './app.component.css',
 })
 export class AppComponent {
-  // TODO: add the header for whole app
+  // TODO: optimize the header for whole app
   title = 'hr-portal';
 }
