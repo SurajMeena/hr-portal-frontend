@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ViewTaskComponent } from './view-task.component';
+import { ViewTaskComponent } from './task.component';
 
 describe('ViewTaskComponent', () => {
   let component: ViewTaskComponent;

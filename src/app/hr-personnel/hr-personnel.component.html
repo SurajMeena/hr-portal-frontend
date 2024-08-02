@@ -1,7 +1,10 @@
 <div class="new-hires-container">
   <div class="header">
     <h2>New Hires</h2>
-    <button class="add-new-hire" (click)="openModal(null, true)">
+    <button
+      class="add-new-hire"
+      (click)="isEditDetailsClicked = true; openModal(null, true)"
+    >
       + Add new hire
     </button>
   </div>
@@ -116,7 +119,7 @@
       ></app-edit-details>
     </ng-container>
     <ng-template #viewTask>
-      <app-view-task></app-view-task>
+      <app-task></app-task>
     </ng-template>
   </app-modal>
 </div>
