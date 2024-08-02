@@ -1,0 +1,36 @@
+<div class="expanded-content">
+  <div *ngFor="let task of tasks" class="task-item">
+    <div class="task-header">
+      <div>
+        <div>{{ task.name }}</div>
+        <div class="task-type">
+          {{ task.type }}
+          <span *ngIf="task.details"> | {{ task.details }}</span>
+        </div>
+      </div>
+      <div>
+        <div
+          style="display: inline"
+          [ngClass]="{
+            'status-completed': task.status === 'completed',
+            'status-pending': task.status === 'pending'
+          }"
+        >
+          <i
+            class="fas fa-check-circle"
+            *ngIf="task.status === 'completed'"
+          ></i>
+          <i class="fas fa-clock" *ngIf="task.status === 'pending'"></i>
+        </div>
+        <i
+          (click)="openModal(task)"
+          style="padding-left: 5px"
+          class="fas fa-external-link-alt"
+        ></i>
+      </div>
+    </div>
+  </div>
+</div>
+<app-modal [isOpen]="isModalOpen" (closeModal)="closeModal()">
+  <app-task [edit]="edit"></app-task>
+</app-modal>

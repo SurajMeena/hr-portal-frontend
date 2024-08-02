@@ -1,3 +1,16 @@
-<h1>{{ task.name }}</h1>
-<hr />
-Response: {{ task.details }}
+<ng-container *ngIf="!edit">
+  <h1>{{ task.name }}</h1>
+  <hr />
+  Response: {{ task.details }}
+</ng-container>
+<ng-container *ngIf="edit">
+  <!-- <app-task-form [task]="task" (save)="saveTask($event)"></app-task-form> -->
+  <div
+    class="drag-drop-zone"
+    (dragover)="onDragOver($event)"
+    (dragleave)="onDragLeave($event)"
+    (drop)="onDrop($event)"
+  >
+    <p>Drag and drop files here</p>
+  </div>
+</ng-container>

@@ -59,37 +59,3 @@
   cursor: pointer;
   font-size: 16px;
 }
-.expanded-content {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-gap: 10px;
-  padding: 15px;
-  background-color: #f9f9f9;
-}
-.task-item {
-  margin-bottom: 10px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  overflow: hidden;
-}
-.task-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px;
-  background-color: #f0f0f0;
-}
-.task-type {
-  font-size: 0.8em;
-  color: #666;
-}
-.status-completed {
-  color: #4caf50;
-}
-.status-pending {
-  color: #f44336;
-}
-.task-details {
-  padding: 10px;
-  background-color: #fff;
-}

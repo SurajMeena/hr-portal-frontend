@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { EditDetailsComponent } from '../edit-details/edit-details.component';
 import { ModalComponent } from '../modal/modal.component';
+import { TaskDashboardComponent } from "../task-dashboard/task-dashboard.component";
 import { TaskComponent } from '../task/task.component';
 
 export interface Task {
@@ -29,7 +30,7 @@ export interface Employee {
 @Component({
   selector: 'app-hr-personnel',
   standalone: true,
-  imports: [CommonModule, ModalComponent, EditDetailsComponent, TaskComponent],
+  imports: [CommonModule, ModalComponent, EditDetailsComponent, TaskComponent, TaskDashboardComponent],
   templateUrl: './hr-personnel.component.html',
   styleUrl: './hr-personnel.component.css',
 })

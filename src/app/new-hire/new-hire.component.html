@@ -1,1 +1,24 @@
-<p>new-hire works!</p>
+<div class="dashboard-container">
+  <div class="dashboard-intro">
+    <div>
+      <h1>Hello, {{ userName }}!</h1>
+      <div class="congratulations">
+        Congratulations 🎉 on being selected for the role of {{ role }} at
+        {{ company }}.
+      </div>
+    </div>
+
+    <div class="countdown">
+      <div class="counter">
+        <div class="days-to-go">{{ daysToGo }}</div>
+        <div>days to go</div>
+      </div>
+      <div class="countdown-info">
+        <div>Your first day will be</div>
+        <div class="first-day">{{ firstDay }}</div>
+      </div>
+    </div>
+  </div>
+  <h2>Your tasks</h2>
+  <app-task-dashboard [tasks]="tasks" [edit]="true"></app-task-dashboard>
+</div>
