@@ -48,7 +48,7 @@ export interface Employee {
 export class HrPersonnelComponent implements OnInit {
   isModalOpen = false;
   isEditDetailsClicked = false;
-  isNewHire = false;
+  addNewHire = false;
   selectedEmployee: Employee | null = null;
   employees: Employee[] = [];
 
@@ -64,11 +64,11 @@ export class HrPersonnelComponent implements OnInit {
     });
   }
 
-  openModal(employee: Employee | null, isNewHire = false) {
+  openModal(employee: Employee | null, addNewHire = false) {
     if (this.isEditDetailsClicked) {
       if (employee === null) this.selectedEmployee = {} as Employee;
       else this.selectedEmployee = employee;
-      this.isNewHire = isNewHire;
+      this.addNewHire = addNewHire;
     }
     this.isModalOpen = true;
   }
@@ -76,7 +76,7 @@ export class HrPersonnelComponent implements OnInit {
   closeModal() {
     this.isModalOpen = false;
     this.selectedEmployee = null;
-    this.isNewHire = false;
+    this.addNewHire = false;
     this.isEditDetailsClicked = false;
   }
 

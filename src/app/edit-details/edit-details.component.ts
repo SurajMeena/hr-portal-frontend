@@ -19,7 +19,7 @@ import { Employee, Task } from '../hr-personnel/hr-personnel.component';
 })
 export class EditDetailsComponent implements OnInit {
   @Input() employee: Employee = {} as Employee;
-  @Input() isNewHire = false;
+  @Input() addNewHire = false;
   @Output() onClose = new EventEmitter<void>();
   errorMsg: string = '';
   hireForm: FormGroup = new FormGroup({});
@@ -127,6 +127,7 @@ export class EditDetailsComponent implements OnInit {
     }
     if (this.hireForm.valid) {
       console.log(this.hireForm.value);
+      this.onClose.emit();
       // TODO: Handle form submission
     } else {
       // TODO: Handle validation errors

@@ -80,7 +80,8 @@
       <app-edit-details
         *ngIf="selectedEmployee"
         [employee]="selectedEmployee"
-        [isNewHire]="isNewHire"
+        [addNewHire]="addNewHire"
+        (onClose)="closeModal()"
       ></app-edit-details>
     </ng-container>
     <ng-template #viewTask>

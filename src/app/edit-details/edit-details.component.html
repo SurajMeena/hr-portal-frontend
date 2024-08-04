@@ -1,5 +1,5 @@
 <div class="new-hire-form">
-  <h2>{{ isNewHire ? "Add new hire" : "Edit new hire details" }}</h2>
+  <h2>{{ addNewHire ? "Add new hire" : "Edit new hire details" }}</h2>
   <form [formGroup]="hireForm" (ngSubmit)="onSubmit()">
     <div class="form-row">
       <div class="form-group">
@@ -149,7 +149,7 @@
         </div>
       </div>
     </div>
-    <div class="form-row">
+    <div *ngIf="!addNewHire" class="form-row">
       <div class="form-group">
         <label>Available tasks to add</label>
         <div class="task-pills">
