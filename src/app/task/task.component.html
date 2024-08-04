@@ -1,16 +1,79 @@
-<ng-container *ngIf="!edit">
-  <h1>{{ task.name }}</h1>
+<div class="course-container">
+  <h2>{{ task.title }}</h2>
   <hr />
-  Response: {{ task.details }}
-</ng-container>
-<ng-container *ngIf="edit">
-  <!-- <app-task-form [task]="task" (save)="saveTask($event)"></app-task-form> -->
-  <div
-    class="drag-drop-zone"
-    (dragover)="onDragOver($event)"
-    (dragleave)="onDragLeave($event)"
-    (drop)="onDrop($event)"
-  >
-    <p>Drag and drop files here</p>
+  <p>
+    {{ task.description }}
+  </p>
+  <ng-container *ngIf="!edit">
+    <div>Response:</div>
+    <ng-container *ngIf="task.type == 'file_upload'">
+      {{ task.fileUpload || "No file found" }}
+    </ng-container>
+    <ng-container *ngIf="task.type == 'text_input'">
+      {{ task.response || "No response found" }}
+    </ng-container>
+  </ng-container>
+  <div style="margin-top: 15px" *ngIf="edit">
+    <div *ngIf="task.type == 'file_upload'">
+      <form [formGroup]="fileForm" (ngSubmit)="onFileFormSubmit()">
+        <div class="file-upload-container">
+          <div
+            class="upload-area"
+            (drop)="onDrop($event)"
+            (dragover)="onDragOver($event)"
+          >
+            <div class="upload-icon">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="17 8 12 3 7 8"></polyline>
+                <line x1="12" y1="3" x2="12" y2="15"></line>
+              </svg>
+            </div>
+            <h3>
+              Drag & drop files or
+              <span class="browse-text" (click)="fileInput.click()"
+                >Browse</span
+              >
+            </h3>
+            <p>Supported formats: JPEG, PNG, PDF</p>
+            <input
+              #fileInput
+              type="file"
+              fileControlName="files"
+              (change)="onFileSelected($event)"
+              style="display: none"
+              accept=".jpeg,.jpg,.png,.pdf"
+              multiple
+            />
+          </div>
+        </div>
+        <h4 *ngIf="files?.value?.length">Uploaded Files:</h4>
+        <ul>
+          <li *ngFor="let file of files?.value">{{ file.name }}</li>
+        </ul>
+        <hr />
+        <button type="submit" rows="6" class="submit-button">Submit</button>
+      </form>
+    </div>
+    <div *ngIf="task.type == 'text_input'">
+      <form [formGroup]="textForm" (ngSubmit)="onTextFormSubmit()">
+        <textarea
+          placeholder="Write here"
+          formControlName="response"
+        ></textarea>
+        <hr />
+        <button type="submit" rows="5" class="submit-button">Submit</button>
+      </form>
+    </div>
   </div>
-</ng-container>
+</div>

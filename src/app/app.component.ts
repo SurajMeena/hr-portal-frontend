@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { HrPersonnelComponent } from './hr-personnel/hr-personnel.component';
+import {Component} from '@angular/core';
+import {RouterOutlet} from '@angular/router';
+import {HrPersonnelComponent} from './hr-personnel/hr-personnel.component';
+import {WebsocketService} from "./websocket.service";
+
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -11,4 +13,11 @@ import { HrPersonnelComponent } from './hr-personnel/hr-personnel.component';
 export class AppComponent {
   // TODO: optimize the header for whole app
   title = 'hr-portal';
+
+  constructor(private websocketService: WebsocketService) {
+  }
+
+  sendMessage() {
+    this.websocketService.sendMessage('Hello from Angular');
+  }
 }

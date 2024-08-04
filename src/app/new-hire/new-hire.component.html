@@ -1,10 +1,10 @@
 <div class="dashboard-container">
   <div class="dashboard-intro">
     <div>
-      <h1>Hello, {{ userName }}!</h1>
+      <h1>Hello, {{ currentEmployee?.name }}!</h1>
       <div class="congratulations">
-        Congratulations 🎉 on being selected for the role of {{ role }} at
-        {{ company }}.
+        Congratulations 🎉 on being selected for the role of
+        <b>{{ currentEmployee?.position }}</b> at {{ currentEmployee?.company }}.
       </div>
     </div>
 
@@ -20,5 +20,8 @@
     </div>
   </div>
   <h2>Your tasks</h2>
-  <app-task-dashboard [tasks]="tasks" [edit]="true"></app-task-dashboard>
+  <app-task-dashboard
+    [employeeId]="currentUserId"
+    [edit]="true"
+  ></app-task-dashboard>
 </div>

@@ -69,7 +69,7 @@
         </tr>
         <tr *ngIf="employee.expanded">
           <td colspan="7">
-            <app-task-dashboard [tasks]="employee.tasks" />
+            <app-task-dashboard [employeeId]="employee.id" />
           </td>
         </tr>
       </ng-container>

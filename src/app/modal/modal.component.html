@@ -1,5 +1,7 @@
 <div class="modal" [ngClass]="{ 'is-active': isOpen }">
-  <button class="modal-close" (click)="close()">Close</button>
+  <button class="modal-close" title="Close modal" (click)="close()">
+    <i class="fas fa-times"></i>
+  </button>
   <div class="modal-background" (click)="close()"></div>
   <div class="modal-content">
     <ng-content></ng-content>

@@ -1,11 +1,12 @@
 <div class="expanded-content">
+  <div *ngIf="tasks.length == 0">No tasks found</div>
   <div *ngFor="let task of tasks" class="task-item">
     <div class="task-header">
       <div>
-        <div>{{ task.name }}</div>
+        <div>{{ task.title }}</div>
         <div class="task-type">
-          {{ task.type }}
-          <span *ngIf="task.details"> | {{ task.details }}</span>
+          {{ task.type == "file_upload" ? "File Upload" : "Text Input" }}
+          <span *ngIf="task.comment"> | {{ task.comment }}</span>
         </div>
       </div>
       <div>
@@ -32,5 +33,5 @@
   </div>
 </div>
 <app-modal [isOpen]="isModalOpen" (closeModal)="closeModal()">
-  <app-task [edit]="edit"></app-task>
+  <app-task *ngIf="selectedTask" [edit]="edit" [task]="selectedTask"></app-task>
 </app-modal>

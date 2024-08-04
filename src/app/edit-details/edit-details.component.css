@@ -53,7 +53,23 @@ textarea {
   float: right;
 }
 
-.error-msg{
+.error-msg {
   padding-left: 5px;
   color: red;
+}
+
+.task-pill {
+  display: inline-block;
+  padding: 8px 12px;
+  background-color: #f2f2f2;
+  border-radius: 20px;
+  margin-right: 8px;
+  margin-bottom: 8px;
+  font-size: 14px;
+  color: #333;
+}
+
+.task-pill:hover {
+  background-color: #e2e2e2;
+  cursor: pointer;
 }

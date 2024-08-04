@@ -1,32 +1,89 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { FileUploadService } from '../file-upload.service';
 import { Task } from '../hr-personnel/hr-personnel.component';
+import { NewHireComponent } from '../new-hire/new-hire.component';
+import { NewHireTask } from '../task-dashboard/task-dashboard.component';
 
 @Component({
   selector: 'app-task',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './task.component.html',
   styleUrl: './task.component.css',
 })
-export class TaskComponent {
-  task: Task = {
-    name: 'Upload your AADHAR',
-    type: 'File upload',
-    status: 'completed',
-    details: '',
-  };
+export class TaskComponent implements OnInit {
+  // TODO: add support for showing proper pdf file
+  @Input() task: NewHireTask = {} as NewHireTask;
   @Input() edit: boolean = false;
+  fileForm: FormGroup = {} as FormGroup;
+  textForm: FormGroup = {} as FormGroup;
 
-  onDragOver(event: DragEvent): void {
-    event.preventDefault();
-  }
-  onDrop(event: DragEvent): void {
-    event.preventDefault();
-    console.log('Dropped');
+  constructor(
+    private fb: FormBuilder,
+    private fileUploadService: FileUploadService
+  ) {}
+  ngOnInit(): void {
+    console.log('Task component initialized');
+    this.fileForm = this.fb.group({
+      files: [null, Validators.required],
+    });
+
+    this.textForm = this.fb.group({
+      response: ['', Validators.required],
+    });
   }
 
-  onDragLeave(event: DragEvent): void {
-    console.log('Drag left');
+  onDrop(event: DragEvent) {
+    event.preventDefault();
+    event.stopPropagation();
+    const files = event.dataTransfer?.files;
+    if (files) {
+      this.handleFiles(files);
+    }
+  }
+
+  onDragOver(event: DragEvent) {
+    event.preventDefault();
+    event.stopPropagation();
+  }
+
+  onFileSelected(event: Event) {
+    const element = event.currentTarget as HTMLInputElement;
+    const files = element.files;
+    if (files) {
+      this.handleFiles(files);
+    }
+  }
+
+  private handleFiles(files: FileList) {
+    this.fileForm.patchValue({ files: files });
+    this.fileForm.get('files')?.updateValueAndValidity();
+  }
+
+  onFileFormSubmit() {
+    console.log('File form submitted', this.fileForm, this.fileForm.valid);
+    if (this.fileForm.valid) {
+      this.fileUploadService
+        .uploadFileAndData(this.fileForm.get('files')?.value, this.task)
+        .subscribe((response) => {
+          console.log('File upload response', response);
+        });
+    }
+  }
+
+  get files() {
+    return this.fileForm.get('files');
+  }
+
+  onTextFormSubmit(): void {
+    console.log('Text form submitted');
   }
 }

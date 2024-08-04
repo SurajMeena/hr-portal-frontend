@@ -1,15 +1,16 @@
 import { CommonModule } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { EditDetailsComponent } from '../edit-details/edit-details.component';
 import { ModalComponent } from '../modal/modal.component';
-import { TaskDashboardComponent } from "../task-dashboard/task-dashboard.component";
+import { TaskDashboardComponent } from '../task-dashboard/task-dashboard.component';
 import { TaskComponent } from '../task/task.component';
 
 export interface Task {
-  name: string;
+  id: number;
+  title: string;
   type: string;
-  status: 'completed' | 'pending';
-  details: string;
+  description: string;
 }
 
 export interface Employee {
@@ -18,6 +19,10 @@ export interface Employee {
   email: string;
   dateOfJoining: string;
   contactNo: number;
+  position?: string;
+  department?: string;
+  salary?: number;
+  company?: string;
   tasksAssigned: number;
   status: {
     completed: number;
@@ -30,7 +35,13 @@ export interface Employee {
 @Component({
   selector: 'app-hr-personnel',
   standalone: true,
-  imports: [CommonModule, ModalComponent, EditDetailsComponent, TaskComponent, TaskDashboardComponent],
+  imports: [
+    CommonModule,
+    ModalComponent,
+    EditDetailsComponent,
+    TaskComponent,
+    TaskDashboardComponent,
+  ],
   templateUrl: './hr-personnel.component.html',
   styleUrl: './hr-personnel.component.css',
 })
@@ -39,192 +50,19 @@ export class HrPersonnelComponent implements OnInit {
   isEditDetailsClicked = false;
   isNewHire = false;
   selectedEmployee: Employee | null = null;
-  employees: Employee[] = [
-    {
-      id: 1267,
-      name: 'Courtney Henry',
-      email: 'courtney.henry@gmail.com',
-      dateOfJoining: '8/21/15',
-      contactNo: 232324232,
-      tasksAssigned: 10,
-      status: { completed: 2, total: 10 },
-      expanded: false,
-      tasks: [
-        {
-          name: 'Upload your AADHAR',
-          type: 'File upload',
-          status: 'completed',
-          details: '',
-        },
-        {
-          name: 'Upload your PAN card',
-          type: 'File upload',
-          status: 'pending',
-          details: 'Pending',
-        },
-        {
-          name: 'Read the company policy documents',
-          type: 'Text input | 1 Answer submitted',
-          status: 'completed',
-          details: '',
-        },
-        {
-          name: 'Submit your feedback on Pre-onboard experience',
-          type: 'Text input | 1 Answer submitted',
-          status: 'completed',
-          details: '',
-        },
-      ],
-    },
-    {
-      id: 1316,
-      name: 'Marvin McKinney',
-      email: 'marvin.mckinney@gmail.com',
-      dateOfJoining: '2/11/12',
-      contactNo: 232324232,
-      tasksAssigned: 5,
-      status: { completed: 4, total: 5 },
-      expanded: false,
-      tasks: [
-        {
-          name: 'Upload your AADHAR',
-          type: 'File upload',
-          status: 'completed',
-          details: '2 Files uploaded',
-        },
-        {
-          name: 'Upload your PAN card',
-          type: 'File upload',
-          status: 'pending',
-          details: 'Pending',
-        },
-        {
-          name: 'Read the company policy documents',
-          type: 'Text input',
-          status: 'completed',
-          details: '1 Answer submitted',
-        },
-        {
-          name: 'Submit your feedback on Pre-onboard experience',
-          type: 'Text input',
-          status: 'completed',
-          details: '1 Answer Submitted',
-        },
-      ],
-    },
-    {
-      id: 2334,
-      name: 'Brooklyn Simmons',
-      email: 'brooklyn.simmons@gmail.com',
-      dateOfJoining: '1/28/17',
-      contactNo: 232324232,
-      tasksAssigned: 5,
-      status: { completed: 1, total: 5 },
-      expanded: false,
-      tasks: [
-        {
-          name: 'Upload your AADHAR',
-          type: 'File upload',
-          status: 'completed',
-          details: '',
-        },
-        {
-          name: 'Upload your PAN card',
-          type: 'File upload',
-          status: 'pending',
-          details: 'Pending',
-        },
-        {
-          name: 'Read the company policy documents',
-          type: 'Text input',
-          status: 'completed',
-          details: '',
-        },
-        {
-          name: 'Submit your feedback on Pre-onboard experience',
-          type: 'Text input',
-          status: 'completed',
-          details: '',
-        },
-      ],
-    },
-    {
-      id: 5657,
-      name: 'Eleanor Pena',
-      email: 'eleanor.pena@gmail.com',
-      dateOfJoining: '7/27/13',
-      contactNo: 232324232,
-      tasksAssigned: 10,
-      status: { completed: 2, total: 10 },
-      expanded: false,
-      tasks: [
-        {
-          name: 'Upload your AADHAR',
-          type: 'File upload',
-          status: 'completed',
-          details: '',
-        },
-        {
-          name: 'Upload your PAN card',
-          type: 'File upload',
-          status: 'pending',
-          details: 'Pending',
-        },
-        {
-          name: 'Read the company policy documents',
-          type: 'Text input',
-          status: 'completed',
-          details: '',
-        },
-        {
-          name: 'Submit your feedback on Pre-onboard experience',
-          type: 'Text input',
-          status: 'completed',
-          details: '',
-        },
-      ],
-    },
-    {
-      id: 8911,
-      name: 'Guy Hawkins',
-      email: 'guy.hawkins@gmail.com',
-      dateOfJoining: '7/11/2019',
-      contactNo: 232324232,
-      tasksAssigned: 4,
-      status: { completed: 3, total: 4 },
-      expanded: false,
-      tasks: [
-        {
-          name: 'Upload your AADHAR',
-          type: 'File upload',
-          status: 'completed',
-          details: '',
-        },
-        {
-          name: 'Upload your PAN card',
-          type: 'File upload',
-          status: 'pending',
-          details: 'Pending',
-        },
-        {
-          name: 'Read the company policy documents',
-          type: 'Text input',
-          status: 'completed',
-          details: '',
-        },
-        {
-          name: 'Submit your feedback on Pre-onboard experience',
-          type: 'Text input',
-          status: 'completed',
-          details: '',
-        },
-      ],
-    },
-  ];
+  employees: Employee[] = [];
 
-  constructor() {}
+  constructor(private http: HttpClient) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    const baseUrl = 'http://localhost:8000/';
+    this.http.get(baseUrl + 'portal/new-hires').subscribe((employees: any) => {
+      this.employees = employees.map((it: any) =>
+        this.mapApiResponseToEmployee(it)
+      );
+      console.log('parsed api response', this.employees);
+    });
+  }
 
   openModal(employee: Employee | null, isNewHire = false) {
     if (this.isEditDetailsClicked) {
@@ -240,5 +78,25 @@ export class HrPersonnelComponent implements OnInit {
     this.selectedEmployee = null;
     this.isNewHire = false;
     this.isEditDetailsClicked = false;
+  }
+
+  mapApiResponseToEmployee(employee: any): Employee {
+    const totalTasks = employee.total_tasks;
+    const completedTasks = employee.completed_tasks;
+
+    return {
+      id: employee.id,
+      name: employee.name,
+      email: employee.email,
+      dateOfJoining: employee.start_date,
+      contactNo: employee.phone,
+      tasksAssigned: totalTasks,
+      status: {
+        completed: completedTasks,
+        total: totalTasks,
+      },
+      expanded: false, // Default value, can be modified as needed
+      tasks: employee.tasks, // Assuming tasks are directly mapped
+    };
   }
 }
