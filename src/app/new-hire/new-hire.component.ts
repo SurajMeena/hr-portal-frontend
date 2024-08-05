@@ -20,12 +20,7 @@ import { TaskComponent } from '../task/task.component';
   styleUrl: './new-hire.component.css',
 })
 export class NewHireComponent implements OnInit {
-  // TODO: remove hardcoded values
-  userName: string = 'Jake';
-  role: string = 'UX Designer';
-  company: string = 'Searce';
   daysToGo: number = 28;
-  firstDay: string = 'Monday, 1st December 2022';
   currentUserId?: number;
   currentEmployee?: Employee;
   constructor(private http: HttpClient, private route: ActivatedRoute) {}
@@ -39,9 +34,19 @@ export class NewHireComponent implements OnInit {
       .get(baseUrl + `new-hires/${this.currentUserId}`)
       .subscribe((user: any) => {
         this.currentEmployee = this.mapApiResponseToEmployee(user);
+        this.daysToGo = this.calculateDaysToGo();
       });
   }
 
+  calculateDaysToGo(): number {
+    const today = new Date();
+    if (!this.currentEmployee?.dateOfJoining) {
+      return 0;
+    }
+    const firstDay = new Date(this.currentEmployee.dateOfJoining);
+    const timeDifference = firstDay.getTime() - today.getTime();
+    return Math.ceil(timeDifference / (1000 * 3600 * 24));
+  }
   mapApiResponseToEmployee(user: any): Employee {
     return {
       id: user.id,

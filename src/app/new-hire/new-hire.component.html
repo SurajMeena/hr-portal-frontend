@@ -4,18 +4,23 @@
       <h1>Hello, {{ currentEmployee?.name }}!</h1>
       <div class="congratulations">
         Congratulations 🎉 on being selected for the role of
-        <b>{{ currentEmployee?.position }}</b> at {{ currentEmployee?.company }}.
+        <b>{{ currentEmployee?.position }}</b> at
+        {{ currentEmployee?.company }}.
       </div>
     </div>
 
     <div class="countdown">
       <div class="counter">
-        <div class="days-to-go">{{ daysToGo }}</div>
+        <div *ngIf="currentEmployee?.dateOfJoining" class="days-to-go">
+          {{ this.daysToGo }}
+        </div>
         <div>days to go</div>
       </div>
       <div class="countdown-info">
         <div>Your first day will be</div>
-        <div class="first-day">{{ firstDay }}</div>
+        <div class="first-day">
+          {{ currentEmployee?.dateOfJoining | date : "EEEE, d MMMM yyyy" }}
+        </div>
       </div>
     </div>
   </div>
