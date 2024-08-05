@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Employee, Task } from '../hr-personnel/hr-personnel.component';
 import { ModalComponent } from '../modal/modal.component';
@@ -19,7 +19,8 @@ import { TaskComponent } from '../task/task.component';
   templateUrl: './new-hire.component.html',
   styleUrl: './new-hire.component.css',
 })
-export class NewHireComponent {
+export class NewHireComponent implements OnInit {
+  // TODO: remove hardcoded values
   userName: string = 'Jake';
   role: string = 'UX Designer';
   company: string = 'Searce';

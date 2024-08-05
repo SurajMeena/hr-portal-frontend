@@ -9,12 +9,14 @@ import { NewHireTask } from './task-dashboard/task-dashboard.component';
 export class FileUploadService {
   constructor(private http: HttpClient) {}
 
-  uploadFileAndData(files: FileList, jsonData: NewHireTask) {
+  uploadFileAndData(jsonData: NewHireTask, files?: FileList): Observable<any> {
     const formData = new FormData();
     const baseUrl = 'http://localhost:8000/portal/';
-    for (let i = 0; i < files.length; i++) {
-      console.log(files[i], files[i].name);
-      formData.append('files', files[i], files[i].name);
+    if (files) {
+      for (let i = 0; i < files.length; i++) {
+        console.log(files[i], files[i].name);
+        formData.append('files', files[i], files[i].name);
+      }
     }
     formData.append('json', JSON.stringify(jsonData));
 
@@ -25,8 +27,12 @@ export class FileUploadService {
     //   console.log(pair[0] + ': ' + pair[1]);
     // }
 
-    return this.http.post(baseUrl + `new-hires/${jsonData.taskId}/update`, formData, {
-      headers: headers,
-    });
+    return this.http.post(
+      baseUrl + `new-hires/${jsonData.taskId}/update`,
+      formData,
+      {
+        headers: headers,
+      }
+    );
   }
 }

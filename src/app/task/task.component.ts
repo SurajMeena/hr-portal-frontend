@@ -72,7 +72,13 @@ export class TaskComponent implements OnInit {
     console.log('File form submitted', this.fileForm, this.fileForm.valid);
     if (this.fileForm.valid) {
       this.fileUploadService
-        .uploadFileAndData(this.fileForm.get('files')?.value, this.task)
+        .uploadFileAndData(
+          {
+            ...this.task,
+            status: 'completed',
+          },
+          this.fileForm.get('files')?.value
+        )
         .subscribe((response) => {
           console.log('File upload response', response);
         });
@@ -84,6 +90,17 @@ export class TaskComponent implements OnInit {
   }
 
   onTextFormSubmit(): void {
-    console.log('Text form submitted');
+    if (this.textForm.valid) {
+      console.log('Text form submitted', this.textForm.value);
+      this.fileUploadService
+        .uploadFileAndData({
+          ...this.task,
+          status: 'completed',
+          response: this.textForm.get('response')?.value,
+        })
+        .subscribe((response) => {
+          console.log('Input task responded', response);
+        });
+    }
   }
 }
