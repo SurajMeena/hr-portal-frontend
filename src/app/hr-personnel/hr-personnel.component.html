@@ -64,7 +64,7 @@
             >
               Edit details
             </button>
-            <button class="action-button">Invite link</button>
+            <button class="action-button" (click)="copyToClipboard(employee)">Invite link</button>
           </td>
         </tr>
         <tr *ngIf="employee.expanded">

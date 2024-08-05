@@ -156,14 +156,20 @@
           <div *ngFor="let task of availableTasks" class="task-pill">
             <span
               (click)="
-                assignTask(employee.id, task.id, employee.dateOfJoining) &&
-                  addTask(task)
+                callAssignTask(
+                  employee.id,
+                  task.id,
+                  employee.dateOfJoining,
+                  task
+                )
               "
               >{{ task.title }}</span
             >
           </div>
         </div>
-        <div *ngIf="errorMsg.length" style="color: red; font-size: small;">**{{ errorMsg }}</div>
+        <div *ngIf="errorMsg.length" style="color: red; font-size: small">
+          **{{ errorMsg }}
+        </div>
       </div>
     </div>
     <button type="button" class="add-task-btn" (click)="addTask()">

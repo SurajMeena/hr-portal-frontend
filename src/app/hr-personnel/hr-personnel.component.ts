@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { EditDetailsComponent } from '../edit-details/edit-details.component';
 import { ModalComponent } from '../modal/modal.component';
 import { TaskDashboardComponent } from '../task-dashboard/task-dashboard.component';
@@ -41,6 +42,7 @@ export interface Employee {
     EditDetailsComponent,
     TaskComponent,
     TaskDashboardComponent,
+    RouterModule,
   ],
   templateUrl: './hr-personnel.component.html',
   styleUrl: './hr-personnel.component.css',
@@ -55,6 +57,10 @@ export class HrPersonnelComponent implements OnInit {
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
+    this.fetchNewHires();
+  }
+
+  fetchNewHires() {
     const baseUrl = 'http://localhost:8000/';
     this.http.get(baseUrl + 'portal/new-hires').subscribe((employees: any) => {
       this.employees = employees.map((it: any) =>
@@ -78,6 +84,7 @@ export class HrPersonnelComponent implements OnInit {
     this.selectedEmployee = null;
     this.addNewHire = false;
     this.isEditDetailsClicked = false;
+    this.fetchNewHires();
   }
 
   mapApiResponseToEmployee(employee: any): Employee {
@@ -98,5 +105,15 @@ export class HrPersonnelComponent implements OnInit {
       expanded: false, // Default value, can be modified as needed
       tasks: employee.tasks, // Assuming tasks are directly mapped
     };
+  }
+
+  copyToClipboard(employee: Employee) {
+    const textarea = document.createElement('textarea');
+    textarea.value = window.location.origin + '/new-hire/' + employee.id;
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textarea);
+    alert('URL copied to clipboard!');
   }
 }
